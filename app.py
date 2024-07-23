@@ -5,6 +5,7 @@ from langchain.vectorstores import Pinecone
 from langchain.embeddings import HuggingFaceInferenceAPIEmbeddings
 from langchain.llms import HuggingFaceEndpoint
 from langchain.prompts import PromptTemplate
+import pinecone
 
 def main():
     # Set your Hugging Face API token and Pinecone API key

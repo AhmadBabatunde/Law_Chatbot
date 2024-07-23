@@ -9,7 +9,7 @@ import pinecone
 
 def main():
     # Set your Hugging Face API token and Pinecone API key
-    huggingfacehub_api_token = st.secrets["HUGGINGFACEHUB_API_TOKEN"]
+    huggingfacehub_api_token = "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"
     pinecone_api_key = "788fbedb-296c-4f90-9214-28b223920915"
 
     # Initialize embeddings

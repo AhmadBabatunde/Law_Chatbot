@@ -17,8 +17,8 @@ def main():
     )
 
     # Initialize Pinecone
-    pc = Pinecone(api_key=pinecone_api_key)
-    hp_chatbot_index = pc.Index('chatbot-law')
+    pinecone.init(api_key=pinecone_api_key, environment="us-west1-gcp")
+    hp_chatbot_index = pinecone.Index('chatbot-law')
     vectorstore = Pinecone(hp_chatbot_index, embeddings.embed_query, "text")
 
     # Define the LLM

@@ -1,11 +1,12 @@
 import streamlit as st
 from langchain.chains import RetrievalQA
 from langchain.memory import ConversationBufferWindowMemory
-from langchain.vectorstores import Pinecone
+#from langchain.vectorstores import Pinecone
 from langchain.embeddings import HuggingFaceInferenceAPIEmbeddings
 from langchain.llms import HuggingFaceEndpoint
 from langchain.prompts import PromptTemplate
 import pinecone
+from pinecone.grpc import PineconeGRPC as Pinecone
 
 def main():
     # Set your Hugging Face API token and Pinecone API key

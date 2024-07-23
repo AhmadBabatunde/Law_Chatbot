@@ -18,7 +18,7 @@ def main():
     )
 
     # Initialize Pinecone
-    pinecone.init(api_key=pinecone_api_key, environment="us-west1-gcp")
+    pinecone.init(api_key=pinecone_api_key, environment="us-east-1")
     hp_chatbot_index = pinecone.Index('chatbot-law')
     vectorstore = Pinecone(hp_chatbot_index, embeddings.embed_query, "text")
 

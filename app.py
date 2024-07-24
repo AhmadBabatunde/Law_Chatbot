@@ -24,10 +24,10 @@ def main():
     #pc = Pinecone(api_key=pinecone_api_key)
     pc = Pinecone(api_key="788fbedb-296c-4f90-9214-28b223920915")
     hp_chatbot_index = pc.Index('chatbot-law')
-    #vectorstore = Pinecone(hp_chatbot_index, embeddings.embed_query, "text")
-    vectorstore = PineconeVectorStore.from_existing_index(
-    index_name="chatbot-law",
-    embedding=embeddings)
+    vectorstore = Pinecone(hp_chatbot_index, embeddings.embed_query, "text")
+    # vectorstore = PineconeVectorStore.from_existing_index(
+    # index_name="chatbot-law",
+    # embedding=embeddings)
 
     # Define the LLM
     llm = HuggingFaceEndpoint(repo_id="mistralai/Mistral-7B-Instruct-v0.3", huggingfacehub_api_token=huggingfacehub_api_token)

@@ -5,9 +5,10 @@ from langchain.vectorstores import Pinecone
 from langchain.embeddings import HuggingFaceInferenceAPIEmbeddings
 from langchain.llms import HuggingFaceEndpoint
 from langchain.prompts import PromptTemplate
-import pinecone
+from pinecone import Pinecone
 from pinecone.grpc import PineconeGRPC as Pinecone
 from langchain_pinecone import PineconeVectorStore
+import os
 
 def main():
     # Set your Hugging Face API token and Pinecone API key
@@ -21,7 +22,7 @@ def main():
 
     # Initialize Pinecone
     #pc = Pinecone(api_key=pinecone_api_key)
-    pinecone.init(api_key=pinecone_api_key)
+    pc = Pinecone(api_key="788fbedb-296c-4f90-9214-28b223920915")
     hp_chatbot_index = pc.Index('chatbot-law')
     #vectorstore = Pinecone(hp_chatbot_index, embeddings.embed_query, "text")
     vectorstore = PineconeVectorStore.from_existing_index(

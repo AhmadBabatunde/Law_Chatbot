@@ -11,8 +11,8 @@ from streamlit_chat import message
 
 def main():
     # Set your Hugging Face API token and Pinecone API key
-    huggingfacehub_api_token = st.secrets["general"]["huggingfacehub_api_token"]
-    pinecone_api_key = st.secrets["general"]["pinecone_api_key"]
+    huggingfacehub_api_token = st.secrets["huggingfacehub_api_token"]
+    pinecone_api_key = st.secrets["pinecone_api_key"]
 
     # Initialize embeddings
     embeddings = HuggingFaceInferenceAPIEmbeddings(

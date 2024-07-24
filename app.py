@@ -5,11 +5,14 @@ from langchain.vectorstores import Pinecone
 from langchain.embeddings import HuggingFaceInferenceAPIEmbeddings
 from langchain.llms import HuggingFaceEndpoint
 from langchain.prompts import PromptTemplate
+from pinecone import Pinecone
+from langchain_pinecone import PineconeVectorStore
+from streamlit_chat import message
 
 def main():
     # Set your Hugging Face API token and Pinecone API key
-    huggingfacehub_api_token = st.secrets["HUGGINGFACEHUB_API_TOKEN"]
-    pinecone_api_key = st.secrets["PINECONE_API_KEY"]
+    huggingfacehub_api_token = "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"
+    pinecone_api_key = "788fbedb-296c-4f90-9214-28b223920915"
 
     # Initialize embeddings
     embeddings = HuggingFaceInferenceAPIEmbeddings(
@@ -17,9 +20,11 @@ def main():
     )
 
     # Initialize Pinecone
-    pc = Pinecone(api_key=pinecone_api_key)
-    hp_chatbot_index = pc.Index('chatbot-law')
-    vectorstore = Pinecone(hp_chatbot_index, embeddings.embed_query, "text")
+    vectorstore = PineconeVectorStore(
+        index_name="chatbot-law",
+        embedding=embeddings, 
+        pinecone_api_key=pinecone_api_key
+    )
 
     # Define the LLM
     llm = HuggingFaceEndpoint(repo_id="mistralai/Mistral-7B-Instruct-v0.3", huggingfacehub_api_token=huggingfacehub_api_token)
@@ -55,15 +60,26 @@ def main():
 
     # Function to generate response
     def generate_response(user_input):
-        response = qa({"question": user_input})
+        response = qa({"query": user_input})  # Change "question" to "query"
         return response['result']
 
-    # Streamlit app
+    # Set the title and default styling
     st.title("Nigerian Lawyer Chatbot")
-    user_input = st.text_input("Ask a legal question:")
-    if st.button("Submit"):
+
+    # Display the chat
+    if 'messages' not in st.session_state:
+        st.session_state.messages = []
+
+    for i, msg in enumerate(st.session_state.messages):
+        message(msg["content"], is_user=msg["is_user"], key=str(i))
+
+    user_input = st.text_input("Ask a legal question:", key="user_input", placeholder="Type your question here...")
+
+    if st.button("Submit", key="submit_button"):
         response = generate_response(user_input)
-        st.write(response)
+        st.session_state.messages.append({"content": user_input, "is_user": True})
+        st.session_state.messages.append({"content": response, "is_user": False})
+        st.experimental_rerun()  # Refresh the app to display the new messages
 
 if __name__ == "__main__":
     main()

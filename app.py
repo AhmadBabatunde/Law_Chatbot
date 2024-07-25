@@ -27,7 +27,7 @@ def main():
     )
 
     # Define the LLM
-    llm = HuggingFaceEndpoint(repo_id="meta-llama/Llama-2-7b-chat-hf", huggingfacehub_api_token=huggingfacehub_api_token)
+    llm = HuggingFaceEndpoint(repo_id="meta-llama/Meta-Llama-3-8B", huggingfacehub_api_token=huggingfacehub_api_token)
 
     # Define the prompt template
     prompt_template = """You are a Nigerian Lawyer. Counsel the users on questions regarding law.

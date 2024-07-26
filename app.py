@@ -30,10 +30,10 @@ def main():
     llm = HuggingFaceEndpoint(repo_id="mistralai/Mistral-Nemo-Instruct-2407", huggingfacehub_api_token=huggingfacehub_api_token)
 
     # Define the prompt template
-    prompt_template = """You are a legal chatbot. Counsel the users on questions regarding law.
+    prompt_template = """You are a Nigerian legal chatbot. Counsel the users on questions regarding Nigerian law.
     Use the following piece of context to answer the question.
     If you don't know the answer, just say you don't know.
-    Keep the answer within six sentences and concise.
+    Keep the answer within six sentences and always print text to the screen.
 
     Context: {context}
     Question: {question}

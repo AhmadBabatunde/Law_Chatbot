@@ -78,9 +78,11 @@ def main():
     user_input = st.chat_input("Ask a legal question:")
 
     if user_input:
-        response = generate_response(user_input)
+        # Append user message and generate response
         st.session_state.messages.append({"content": user_input, "is_user": True})
+        response = generate_response(user_input)
         st.session_state.messages.append({"content": response, "is_user": False})
+        st.experimental_rerun()  # Refresh the app to display the new messages
 
 if __name__ == "__main__":
     main()

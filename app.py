@@ -79,7 +79,7 @@ def main():
         st.session_state.messages.append({"content": response, "is_user": False})
 
     # Display the text input and submit button
-    user_input = st.chat_input("Ask a legal question:", key="user_input", placeholder="Type your question here...", on_change=handle_user_input)
+    user_input = st.chat_input("Ask a legal question:", key="user_input", on_change=handle_user_input)
 
 if __name__ == "__main__":
     main()

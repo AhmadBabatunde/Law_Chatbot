@@ -60,7 +60,7 @@ def main():
 
     # Function to generate response
     def generate_response(user_input):
-        response = qa({"query": user_input})  # Change "question" to "query"
+        response = qa({"query": user_input})
         return response['result']
 
     # Set the title and default styling
@@ -76,10 +76,13 @@ def main():
     user_input = st.text_input("Ask a legal question:", key="user_input", placeholder="Type your question here...")
 
     if st.button("Submit", key="submit_button"):
-        response = generate_response(user_input)
-        st.session_state.messages.append({"content": user_input, "is_user": True})
-        st.session_state.messages.append({"content": response, "is_user": False})
-        st.experimental_rerun()  # Refresh the app to display the new messages
+        if user_input:
+            response = generate_response(user_input)
+            st.session_state.messages.append({"content": user_input, "is_user": True})
+            st.session_state.messages.append({"content": response, "is_user": False})
+            st.session_state.user_input = ""  # Clear the text input
+            st.experimental_rerun()  # Refresh the app to display the new messages
 
 if __name__ == "__main__":
     main()
+

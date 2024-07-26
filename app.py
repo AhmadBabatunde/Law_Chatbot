@@ -47,7 +47,7 @@ def main():
     )
 
     # Initialize memory
-    memory = ConversationBufferWindowMemory(k=3)
+    memory = ConversationBufferWindowMemory(k=5)
 
     # Initialize the RetrievalQA chain with memory
     qa = RetrievalQA.from_chain_type(
@@ -82,7 +82,10 @@ def main():
         st.session_state.user_input = ""  # Clear input field
 
     # Display the text input and submit button
-    st.text_input("Ask a legal question:", key="user_input", placeholder="Type your question here...", on_change=handle_user_input)
+    user_input = st.text_input("Ask a legal question:", key="user_input", placeholder="Type your question here...")
+
+    if st.button("Submit", key="submit_button"):
+        handle_user_input()
 
 if __name__ == "__main__":
     main()

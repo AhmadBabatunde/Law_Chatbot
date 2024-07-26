@@ -74,17 +74,22 @@ def main():
         message(msg["content"], is_user=msg["is_user"], key=str(i))
 
     # Function to handle user input and response generation
-    def handle_user_input(user_input):
+    def handle_user_input():
+        user_input = st.session_state.temp_user_input
         response = generate_response(user_input)
         st.session_state.messages.append({"content": user_input, "is_user": True})
         st.session_state.messages.append({"content": response, "is_user": False})
+        st.session_state.temp_user_input = ""  # Clear the input field
+
+    # Temporary state for the text input
+    if 'temp_user_input' not in st.session_state:
+        st.session_state.temp_user_input = ""
 
     # Display the text input and submit button
-    user_input = st.text_input("Ask a legal question:", key="user_input", placeholder="Type your question here...")
+    user_input = st.text_input("Ask a legal question:", key="temp_user_input", placeholder="Type your question here...")
 
     if st.button("Submit", key="submit_button"):
-        handle_user_input(user_input)
-        st.session_state.user_input = ""  # Clear the input field
+        handle_user_input()
 
 if __name__ == "__main__":
     main()

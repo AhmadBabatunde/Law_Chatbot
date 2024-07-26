@@ -84,5 +84,13 @@ def main():
     # Display the text input and submit button
     st.text_input("Ask a legal question:", key="user_input", placeholder="Type your question here...", on_change=handle_user_input)
 
+    # Display the chat log with proper formatting
+    st.write("Chat Log:")
+    for msg in st.session_state.messages:
+        if msg["is_user"]:
+            st.write("User: " + msg["content"])
+        else:
+            st.write("Bot: " + msg["content"])
+
 if __name__ == "__main__":
     main()

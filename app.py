@@ -72,7 +72,10 @@ def main():
 
     # Display the chat
     for i, msg in enumerate(st.session_state.messages):
-        message(msg["content"], is_user=msg["is_user"], key=str(i))
+        if msg["is_user"]:
+            message(msg["content"], is_user=True, key=str(i))
+        else:
+            st.markdown(f"**Chatbot:** {msg['content']}")
 
     # Handle user input
     user_input = st.chat_input("Ask a legal question:")

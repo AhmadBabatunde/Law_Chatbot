@@ -47,7 +47,7 @@ def main():
     )
 
     # Initialize memory
-    memory = ConversationBufferWindowMemory(k=5)
+    memory = ConversationBufferWindowMemory(k=3)
 
     # Initialize the RetrievalQA chain with memory
     qa = RetrievalQA.from_chain_type(
@@ -73,18 +73,16 @@ def main():
     for i, msg in enumerate(st.session_state.messages):
         message(msg["content"], is_user=msg["is_user"], key=str(i))
 
-    # Use a unique key for the text input
-    user_input_key = "user_input_" + str(len(st.session_state.messages))
+    # Function to handle user input and response generation
+    def handle_user_input():
+        user_input = st.session_state.user_input
+        response = generate_response(user_input)
+        st.session_state.messages.append({"content": user_input, "is_user": True})
+        st.session_state.messages.append({"content": response, "is_user": False})
+        st.session_state.user_input = ""  # Clear input field
 
-    user_input = st.text_input("Ask a legal question:", key=user_input_key, placeholder="Type your question here...")
-
-    if st.button("Submit", key="submit_button"):
-        if user_input:
-            response = generate_response(user_input)
-            st.session_state.messages.append({"content": user_input, "is_user": True})
-            st.session_state.messages.append({"content": response, "is_user": False})
-            # Use st.experimental_set_query_params to effectively rerun the app
-            st.experimental_set_query_params(**st.experimental_get_query_params())
+    # Display the text input and submit button
+    st.text_input("Ask a legal question:", key="user_input", placeholder="Type your question here...", on_change=handle_user_input)
 
 if __name__ == "__main__":
     main()

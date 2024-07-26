@@ -7,7 +7,6 @@ from langchain.llms import HuggingFaceEndpoint
 from langchain.prompts import PromptTemplate
 from pinecone import Pinecone
 from langchain_pinecone import PineconeVectorStore
-from streamlit_chat import message
 
 def main():
     # Set your Hugging Face API token and Pinecone API key
@@ -61,7 +60,7 @@ def main():
     # Function to generate response
     def generate_response(user_input):
         response = qa({"query": user_input})
-        return str(response['result'])
+        return str(response['result'])  # Convert response to text
 
     # Set the title and default styling
     st.title("Nigerian Lawyer Chatbot")
@@ -71,18 +70,16 @@ def main():
         st.session_state.messages = []
 
     for i, msg in enumerate(st.session_state.messages):
-        message(msg["content"], is_user=msg["is_user"], key=str(i))
+        st.text(f"User: {msg['content']}" if msg["is_user"] else f"Bot: {msg['content']}")
 
     # Function to handle user input and response generation
-    def handle_user_input():
-        user_input = st.session_state.user_input
+    def handle_user_input(user_input):
         response = generate_response(user_input)
         st.session_state.messages.append({"content": user_input, "is_user": True})
         st.session_state.messages.append({"content": response, "is_user": False})
-        st.session_state.user_input = ""  # Clear input field
 
     # Display the text input and submit button
-    st.text_input("Ask a legal question:", key="user_input", placeholder="Type your question here...", on_change=handle_user_input)
+    user_input = st.chat_input("Ask a legal question:", key="user_input", placeholder="Type your question here...", on_change=handle_user_input)
 
 if __name__ == "__main__":
     main()

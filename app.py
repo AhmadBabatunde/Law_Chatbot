@@ -61,31 +61,27 @@ def main():
     # Function to generate response
     def generate_response(user_input):
         response = qa({"query": user_input})
-        return str(response['result'])  # Convert response to text
+        return response['result']
 
     # Set the title and default styling
     st.title("Nigerian Lawyer Chatbot")
 
-    # Display the chat
+    # Initialize session state for messages
     if 'messages' not in st.session_state:
         st.session_state.messages = []
 
+    # Display the chat
     for i, msg in enumerate(st.session_state.messages):
-        st.text(f"User: {msg['content']}" if msg["is_user"] else f"Bot: {msg['content']}")
+        message(msg["content"], is_user=msg["is_user"], key=str(i))
 
-    # Function to handle user input and response generation
-    def handle_user_input(user_input):
+    # Handle user input
+    user_input = st.chat_input("Ask a legal question:")
+
+    if user_input:
         response = generate_response(user_input)
         st.session_state.messages.append({"content": user_input, "is_user": True})
         st.session_state.messages.append({"content": response, "is_user": False})
-
-    # Display the text input and submit button
-    with st.form("my_form"):
-        user_input = st.chat_input("Ask a legal question:", key="user_input", placeholder="Type your question here...")
-        submitted = st.form_submit_button("Submit")
-
-    if submitted:
-        handle_user_input(user_input)
+        st.experimental_rerun()  # Refresh the app to display the new messages
 
 if __name__ == "__main__":
     main()

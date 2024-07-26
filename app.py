@@ -8,6 +8,7 @@ from langchain.prompts import PromptTemplate
 from pinecone import Pinecone
 from langchain_pinecone import PineconeVectorStore
 from streamlit_chat import message
+import re
 
 def main():
     # Set your Hugging Face API token and Pinecone API key
@@ -61,7 +62,9 @@ def main():
     # Function to generate response
     def generate_response(user_input):
         response = qa({"query": user_input})
-        return response['result'].replace("\n", " ")
+        # Remove any long dashes or unwanted characters from the response
+        cleaned_response = re.sub(r"^\s*[-–—]+\s*", "", response['result'])
+        return cleaned_response.replace("\n", " ")
 
     # Set the title and default styling
     st.title("Nigerian Lawyer Chatbot")
@@ -73,9 +76,9 @@ def main():
     # Display the chat
     for i, msg in enumerate(st.session_state.messages):
         if msg["is_user"]:
-            message(msg["content"], is_user=True, key=str(i))
+            message(msg["content"], is_user=True, key=str(i), avatar_style="micah")
         else:
-            st.markdown(f"**Chatbot:** {msg['content']}")
+            message(msg["content"], is_user=False, key=str(i), avatar_style="bottts")
 
     # Handle user input
     user_input = st.chat_input("Ask a legal question:")

@@ -61,7 +61,7 @@ def main():
     # Function to generate response
     def generate_response(user_input):
         response = qa({"query": user_input})
-        return str(response['result'])  # Convert response to text
+        return str(response['result'])
 
     # Set the title and default styling
     st.title("Nigerian Lawyer Chatbot")
@@ -74,20 +74,15 @@ def main():
         message(msg["content"], is_user=msg["is_user"], key=str(i))
 
     # Function to handle user input and response generation
-    def handle_user_input(user_input):
+    def handle_user_input():
+        user_input = st.session_state.user_input
         response = generate_response(user_input)
         st.session_state.messages.append({"content": user_input, "is_user": True})
         st.session_state.messages.append({"content": response, "is_user": False})
+        st.session_state.user_input = ""  # Clear input field
 
     # Display the text input and submit button
-    input_container = st.empty()
-    if 'user_input' not in st.session_state:
-        st.session_state.user_input = ''
-    user_input = input_container.text_input("Ask a legal question:", value=st.session_state.user_input, key="user_input", placeholder="Type your question here...")
-    if st.button("Submit"):
-        handle_user_input(user_input)
-        st.session_state.user_input = ''  # Clear the text input field
-        input_container.empty()
+    st.text_input("Ask a legal question:", key="user_input", placeholder="Type your question here...", on_change=handle_user_input)
 
 if __name__ == "__main__":
     main()

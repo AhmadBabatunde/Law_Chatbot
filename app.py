@@ -1,12 +1,10 @@
 import streamlit as st
 from langchain.chains import RetrievalQA
 from langchain.memory import ConversationBufferWindowMemory
-from langchain.vectorstores import Pinecone
-from langchain.embeddings import HuggingFaceInferenceAPIEmbeddings
-from langchain.llms import HuggingFaceEndpoint
+from langchain_community.vectorstores import PineconeVectorStore
+from langchain_community.embeddings import HuggingFaceInferenceAPIEmbeddings
+from langchain_community.llms import HuggingFaceEndpoint
 from langchain.prompts import PromptTemplate
-from pinecone import Pinecone
-from langchain_pinecone import PineconeVectorStore
 
 def main():
     # Set your Hugging Face API token and Pinecone API key
@@ -79,7 +77,12 @@ def main():
         st.session_state.messages.append({"content": response, "is_user": False})
 
     # Display the text input and submit button
-    user_input = st.chat_input("Ask a legal question:", key="user_input")
+    with st.form("my_form"):
+        user_input = st.chat_input("Ask a legal question:", key="user_input", placeholder="Type your question here...")
+        submitted = st.form_submit_button("Submit")
+
+    if submitted:
+        handle_user_input(user_input)
 
 if __name__ == "__main__":
     main()

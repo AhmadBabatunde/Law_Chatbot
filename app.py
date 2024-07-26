@@ -81,10 +81,13 @@ def main():
 
     # Display the text input and submit button
     input_container = st.empty()
-    user_input = input_container.text_input("Ask a legal question:", key="user_input", placeholder="Type your question here...")
+    if 'user_input' not in st.session_state:
+        st.session_state.user_input = ''
+    user_input = input_container.text_input("Ask a legal question:", value=st.session_state.user_input, key="user_input", placeholder="Type your question here...")
     if st.button("Submit"):
         handle_user_input(user_input)
-        input_container.empty()  # Clear the text input field
+        st.session_state.user_input = ''  # Clear the text input field
+        input_container.empty()
 
 if __name__ == "__main__":
     main()

@@ -66,30 +66,23 @@ def main():
     # Set the title and default styling
     st.title("Nigerian Lawyer Chatbot")
 
-    # Initialize session state for messages and input
+    # Display the chat
     if 'messages' not in st.session_state:
         st.session_state.messages = []
 
-    if 'input' not in st.session_state:
-        st.session_state.input = ""
-
-    # Display the chat
     for i, msg in enumerate(st.session_state.messages):
         message(msg["content"], is_user=msg["is_user"], key=str(i))
 
     # Function to handle user input and response generation
-    def handle_user_input(user_input):
+    def handle_user_input():
+        user_input = st.session_state.user_input
         response = generate_response(user_input)
         st.session_state.messages.append({"content": user_input, "is_user": True})
         st.session_state.messages.append({"content": response, "is_user": False})
-        st.session_state.input = ""  # Clear the input field
+        st.session_state.user_input = ""  # Clear input field
 
     # Display the text input and submit button
-    user_input = st.text_input("Ask a legal question:", key="input", placeholder="Type your question here...")
-
-    if st.button("Submit", key="submit_button"):
-        if user_input:
-            handle_user_input(user_input)
+    st.text_input("Ask a legal question:", key="user_input", placeholder="Type your question here...", on_change=handle_user_input)
 
 if __name__ == "__main__":
     main()

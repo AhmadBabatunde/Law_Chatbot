@@ -28,7 +28,7 @@ def main():
     )
 
     # Define the LLM
-    llm = HuggingFaceEndpoint(repo_id="mistralai/Mistral-7B-Instruct-v0.3", huggingfacehub_api_token=huggingfacehub_api_token)
+    llm = HuggingFaceEndpoint(repo_id="togethercomputer/RedPajama-INCITE-Chat-3B-v1", huggingfacehub_api_token=huggingfacehub_api_token)
 
     # Define the prompt template
     prompt_template = """You are a Nigerian legal chatbot. Counsel the users on questions regarding Nigerian law.

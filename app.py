@@ -61,7 +61,7 @@ def main():
     # Function to generate response
     def generate_response(user_input):
         response = qa({"query": user_input})
-        return response['result']
+        return response['result'].replace("\n", " ")
 
     # Set the title and default styling
     st.title("Nigerian Lawyer Chatbot")
@@ -75,7 +75,7 @@ def main():
         if msg["is_user"]:
             message(msg["content"], is_user=True, key=str(i))
         else:
-            st.text(f"Chatbot: {msg['content']}")
+            st.markdown(f"**Chatbot:** {msg['content']}")
 
     # Handle user input
     user_input = st.chat_input("Ask a legal question:")
@@ -85,7 +85,7 @@ def main():
         st.session_state.messages.append({"content": user_input, "is_user": True})
         response = generate_response(user_input)
         st.session_state.messages.append({"content": response, "is_user": False})
-        st.rerun()  # Refresh the app to display the new messages
+        st.experimental_rerun()  # Refresh the app to display the new messages
 
 if __name__ == "__main__":
     main()

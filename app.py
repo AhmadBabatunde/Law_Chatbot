@@ -83,7 +83,8 @@ def main():
             response = generate_response(user_input)
             st.session_state.messages.append({"content": user_input, "is_user": True})
             st.session_state.messages.append({"content": response, "is_user": False})
-            st.experimental_rerun()  # Refresh the app to display the new messages
+            # Use st.experimental_set_query_params to effectively rerun the app
+            st.experimental_set_query_params(**st.experimental_get_query_params())
 
 if __name__ == "__main__":
     main()

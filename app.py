@@ -64,7 +64,8 @@ def main():
         response = qa({"query": user_input})
         # Remove any long dashes or unwanted characters from the response
         cleaned_response = re.sub(r"^\s*[-–—]+\s*", "", response['result'])
-        return cleaned_response.replace("\n", " ")
+        cleaned_response = cleaned_response.replace("\n", " ")
+        return cleaned_response.strip()
 
     # Set the title and default styling
     st.title("Nigerian Lawyer Chatbot")

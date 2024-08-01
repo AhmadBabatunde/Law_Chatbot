@@ -17,7 +17,7 @@ def main():
     # Set your Hugging Face API token and Pinecone API key
     huggingfacehub_api_token = st.secrets["huggingfacehub_api_token"]
     pinecone_api_key = st.secrets["pinecone_api_key"]
-    genai.configure(api_key=os.environ["gemini_api_key"])
+    #genai.configure(api_key=os.environ["gemini_api_key"])
 
     # Initialize embeddings
     embeddings = HuggingFaceInferenceAPIEmbeddings(

@@ -6,3 +6,4 @@ langchain-pinecone
 langchain_community
 langchain_huggingface
 streamlit_chat
+google-generativeai

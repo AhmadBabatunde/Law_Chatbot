@@ -8,12 +8,15 @@ from langchain.prompts import PromptTemplate
 from pinecone import Pinecone
 from langchain_pinecone import PineconeVectorStore
 from streamlit_chat import message
+import google.generativeai as genai
+import os
 import re
 
 def main():
     # Set your Hugging Face API token and Pinecone API key
     huggingfacehub_api_token = st.secrets["huggingfacehub_api_token"]
     pinecone_api_key = st.secrets["pinecone_api_key"]
+    genai.configure(api_key=os.environ["gemini_api_key"])
 
     # Initialize embeddings
     embeddings = HuggingFaceInferenceAPIEmbeddings(
@@ -28,7 +31,8 @@ def main():
     )
 
     # Define the LLM
-    llm = HuggingFaceEndpoint(repo_id="togethercomputer/RedPajama-INCITE-Chat-3B-v1", huggingfacehub_api_token=huggingfacehub_api_token)
+    #llm = HuggingFaceEndpoint(repo_id="togethercomputer/RedPajama-INCITE-Chat-3B-v1", huggingfacehub_api_token=huggingfacehub_api_token)
+    llm = genai.GenerativeModel('gemini-1.5-flash')
 
     # Define the prompt template
     prompt_template = """You are a Nigerian legal chatbot. Advise lawyers on questions regarding Nigerian law.

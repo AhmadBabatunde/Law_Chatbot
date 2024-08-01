@@ -8,8 +8,8 @@ from langchain.prompts import PromptTemplate
 from pinecone import Pinecone
 from langchain_pinecone import PineconeVectorStore
 from streamlit_chat import message
-import google.generativeai as genai
-from langchain_google_genai import ChatGoogleGenerativeAI
+#import google.generativeai as genai
+#from langchain_google_genai import ChatGoogleGenerativeAI
 import os
 import re
 
@@ -32,9 +32,9 @@ def main():
     )
 
     # Define the LLM
-    #llm = HuggingFaceEndpoint(repo_id="togethercomputer/RedPajama-INCITE-Chat-3B-v1", huggingfacehub_api_token=huggingfacehub_api_token)
+    llm = HuggingFaceEndpoint(repo_id="togethercomputer/RedPajama-INCITE-Chat-3B-v1", huggingfacehub_api_token=huggingfacehub_api_token)
     #llm = genai.GenerativeModel('gemini-1.5-flash')
-    llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash")
+    #llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash")
 
     # Define the prompt template
     prompt_template = """You are a Nigerian legal chatbot. Advise lawyers on questions regarding Nigerian law.

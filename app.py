@@ -19,7 +19,7 @@ def main():
     huggingfacehub_api_token = st.secrets["huggingfacehub_api_token"]
     pinecone_api_key = st.secrets["pinecone_api_key"]
     gemini_api_key = st.secrets["gemini_api_key"]
-    os.environ["GOOGLE_API_KEY"] = getpass.getpass(gemini_api_key)
+    os.environ["GOOGLE_API_KEY"] = getpass.getpass("AIzaSyD3MDvzy_AZmkwfixmA8qd8anIUpEw64Dg")
 
     # Initialize embeddings
     # embeddings = HuggingFaceInferenceAPIEmbeddings(
@@ -37,7 +37,7 @@ def main():
     # Define the LLM
     #llm = HuggingFaceEndpoint(repo_id="togethercomputer/RedPajama-INCITE-Chat-3B-v1", huggingfacehub_api_token=huggingfacehub_api_token)
     llm = ChatGoogleGenerativeAI(
-    model="gemini-1.5-pro",
+    model="gemini-1.5-flash",
     temperature=0,
     max_tokens=None,
     timeout=None,

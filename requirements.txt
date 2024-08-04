@@ -8,3 +8,4 @@ langchain_huggingface
 streamlit_chat
 google-generativeai
 langchain-google-genai
+langchain-huggingface

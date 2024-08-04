@@ -21,7 +21,7 @@ def main():
     huggingfacehub_api_token = st.secrets["huggingfacehub_api_token"]
     pinecone_api_key = st.secrets["pinecone_api_key"]
     gemini_api_key = st.secrets["gemini_api_key"]
-    os.environ["GOOGLE_API_KEY"] = getpass.getpass("AIzaSyD3MDvzy_AZmkwfixmA8qd8anIUpEw64Dg")
+    #os.environ["GOOGLE_API_KEY"] = getpass.getpass("AIzaSyD3MDvzy_AZmkwfixmA8qd8anIUpEw64Dg")
 
     # Initialize embeddings
     embeddings = HuggingFaceEndpointEmbeddings(

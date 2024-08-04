@@ -8,8 +8,9 @@ from langchain.prompts import PromptTemplate
 from pinecone import Pinecone
 from langchain_pinecone import PineconeVectorStore
 from streamlit_chat import message
-#import google.generativeai as genai
-#from langchain_google_genai import ChatGoogleGenerativeAI
+import getpass
+from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_google_genai import GoogleGenerativeAIEmbeddings
 import os
 import re
 
@@ -17,12 +18,14 @@ def main():
     # Set your Hugging Face API token and Pinecone API key
     huggingfacehub_api_token = st.secrets["huggingfacehub_api_token"]
     pinecone_api_key = st.secrets["pinecone_api_key"]
-    #genai.configure(api_key=os.environ["gemini_api_key"])
+    gemini_api_key = st.secrets["gemini_api_key"]
+    os.environ["GOOGLE_API_KEY"] = getpass.getpass(gemini_api_key)
 
     # Initialize embeddings
-    embeddings = HuggingFaceInferenceAPIEmbeddings(
-        api_key=huggingfacehub_api_token, model_name="sentence-transformers/all-MiniLM-l6-v2"
-    )
+    # embeddings = HuggingFaceInferenceAPIEmbeddings(
+    #     api_key=huggingfacehub_api_token, model_name="sentence-transformers/all-MiniLM-l6-v2"
+    # )
+    embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
 
     # Initialize Pinecone
     vectorstore = PineconeVectorStore(
@@ -32,7 +35,15 @@ def main():
     )
 
     # Define the LLM
-    llm = HuggingFaceEndpoint(repo_id="togethercomputer/RedPajama-INCITE-Chat-3B-v1", huggingfacehub_api_token=huggingfacehub_api_token)
+    #llm = HuggingFaceEndpoint(repo_id="togethercomputer/RedPajama-INCITE-Chat-3B-v1", huggingfacehub_api_token=huggingfacehub_api_token)
+    llm = ChatGoogleGenerativeAI(
+    model="gemini-1.5-pro",
+    temperature=0,
+    max_tokens=None,
+    timeout=None,
+    max_retries=2,
+    # other params...
+)
     #llm = genai.GenerativeModel('gemini-1.5-flash')
     #llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash")
 

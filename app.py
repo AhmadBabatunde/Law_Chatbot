@@ -19,7 +19,7 @@ import re
 
 def main():
     # Set your Hugging Face API token and Pinecone API key
-    huggingfacehub_api_token = st.secrets["huggingfacehub_api_token"]
+    #huggingfacehub_api_token = st.secrets["huggingfacehub_api_token"]
     pinecone_api_key = st.secrets["pinecone_api_key"]
     gemini_api_key = st.secrets["gemini_api_key"]
     genai.configure(api_key=gemini_api_key)
@@ -38,7 +38,7 @@ def main():
     )
 
     # Define the LLM
-   #llm = HuggingFaceEndpoint(repo_id="togethercomputer/RedPajama-INCITE-Chat-3B-v1", huggingfacehub_api_token=huggingfacehub_api_token)
+  ##llm = HuggingFaceEndpoint(repo_id="togethercomputer/RedPajama-INCITE-Chat-3B-v1", huggingfacehub_api_token=huggingfacehub_api_token)
     llm = ChatGoogleGenerativeAI(
     model="gemini-1.5-flash",
     temperature=0,

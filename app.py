@@ -36,10 +36,10 @@ def main():
         embedding=embeddings, 
         pinecone_api_key=pinecone_api_key
     )
-    llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash", convert_system_message_to_human=True, temperature=0.3)
+    #llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash", convert_system_message_to_human=True, temperature=0.3)
 
     # Define the LLM
-  ##llm = HuggingFaceEndpoint(repo_id="togethercomputer/RedPajama-INCITE-Chat-3B-v1", huggingfacehub_api_token=huggingfacehub_api_token)
+    llm = HuggingFaceEndpoint(repo_id="togethercomputer/RedPajama-INCITE-Chat-3B-v1", huggingfacehub_api_token=huggingfacehub_api_token)
     
     #llm = genai.GenerativeModel('gemini-1.5-flash')
     #llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash")

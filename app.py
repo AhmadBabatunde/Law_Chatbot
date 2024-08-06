@@ -26,7 +26,7 @@ def main():
 
     # Initialize embeddings
     embeddings = HuggingFaceEndpointEmbeddings(
-        huggingfacehub_api_token=huggingfacehub_api_token, model="sentence-transformers/all-MiniLM-l6-v2"
+        huggingfacehub_api_token=huggingfacehub_api_token, model="sentence-transformers/paraphrase-multilingual-mpnet-base-v2"
     )
     #embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
 

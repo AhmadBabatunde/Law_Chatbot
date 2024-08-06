@@ -9,10 +9,11 @@ from pinecone import Pinecone
 from langchain_pinecone import PineconeVectorStore
 from streamlit_chat import message
 #import getpass
-#from langchain_google_genai import ChatGoogleGenerativeAI
-#from langchain_google_genai import GoogleGenerativeAIEmbeddings
+from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from langchain_huggingface import HuggingFaceEndpoint
 from langchain_huggingface.embeddings import HuggingFaceEndpointEmbeddings
+import google.generativeai as genai
 import os
 import re
 
@@ -21,31 +22,31 @@ def main():
     huggingfacehub_api_token = st.secrets["huggingfacehub_api_token"]
     pinecone_api_key = st.secrets["pinecone_api_key"]
     gemini_api_key = st.secrets["gemini_api_key"]
-    #os.environ["GOOGLE_API_KEY"] = getpass.getpass("AIzaSyD3MDvzy_AZmkwfixmA8qd8anIUpEw64Dg")
+    genai.configure(api_key=gemini_api_key)
 
     # Initialize embeddings
-    embeddings = HuggingFaceEndpointEmbeddings(
-        huggingfacehub_api_token=huggingfacehub_api_token, model="sentence-transformers/all-MiniLM-l6-v2"
-    )
-    #embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
+    # embeddings = HuggingFaceEndpointEmbeddings(
+    #     huggingfacehub_api_token=huggingfacehub_api_token, model="sentence-transformers/all-MiniLM-l6-v2"
+    # )
+    embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
 
     # Initialize Pinecone
     vectorstore = PineconeVectorStore(
-        index_name="chatbot-law",
+        index_name= "gemini-index",
         embedding=embeddings, 
         pinecone_api_key=pinecone_api_key
     )
 
     # Define the LLM
-    llm = HuggingFaceEndpoint(repo_id="togethercomputer/RedPajama-INCITE-Chat-3B-v1", huggingfacehub_api_token=huggingfacehub_api_token)
-#     llm = ChatGoogleGenerativeAI(
-#     model="gemini-1.5-flash",
-#     temperature=0,
-#     max_tokens=None,
-#     timeout=None,
-#     max_retries=2,
-#     # other params...
-# )
+   #llm = HuggingFaceEndpoint(repo_id="togethercomputer/RedPajama-INCITE-Chat-3B-v1", huggingfacehub_api_token=huggingfacehub_api_token)
+    llm = ChatGoogleGenerativeAI(
+    model="gemini-1.5-flash",
+    temperature=0,
+    max_tokens=None,
+    timeout=None,
+    max_retries=2,
+    # other params...
+)
     #llm = genai.GenerativeModel('gemini-1.5-flash')
     #llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash")
 

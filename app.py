@@ -32,7 +32,7 @@ def main():
 
     # Initialize Pinecone
     vectorstore = PineconeVectorStore(
-        index_name= "chatbot-law",
+        index_name= "law-chatbot",
         embedding=embeddings, 
         pinecone_api_key=pinecone_api_key
     )

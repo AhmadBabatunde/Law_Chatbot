@@ -36,7 +36,7 @@ def main():
         embedding=embeddings, 
         pinecone_api_key=pinecone_api_key
     )
-    llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash", convert_system_message_to_human=True, temperature=0.3)
+    llm = ChatGoogleGenerativeAI(model="gemini-1.5-pro", convert_system_message_to_human=True, temperature=0.3)
 
     # Define the LLM
     #llm = HuggingFaceEndpoint(repo_id="togethercomputer/RedPajama-INCITE-Chat-3B-v1", huggingfacehub_api_token=huggingfacehub_api_token)
@@ -46,15 +46,18 @@ def main():
 
     # Define the prompt template
     prompt_template = """You are a Nigerian legal chatbot. Advise lawyers on questions regarding Nigerian law.
-    Use the following piece of context to answer the question.
-    If you don't know the answer, just say you don't know.
-    Keep the answer within six sentences and never ask users to seek advise from a professional lawyer.
 
-    Context: {context}
-    Question: {question}
+Always respond with a greeting when the user greets you. 
 
-    Answer the question and provide additional helpful information, based on the pieces of information, if applicable.
-    """
+Use the following piece of context to answer the question. 
+If you don't know the answer, just say you don't know. 
+Keep the answer within six sentences and never suggest users seek advice from professional lawyers.
+
+Context: {context}  
+Question: {question}  
+
+Answer the question and provide additional helpful information, based on the pieces of information, if applicable.  
+ """
 
     prompt = PromptTemplate(
         template=prompt_template,
